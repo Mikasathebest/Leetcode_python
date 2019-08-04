@@ -1,0 +1,30 @@
+LeetCode 703 Kth Largest Element in a Stream
+
+题目：寻找一个序列中第K大的数
+
+思路：创建一个Mini Heap，使其大小为k；如果新数据 < 最小值,不动；如果新数据>最小值，用新数据替换掉最小值。
+
+代码如下
+
+'''python
+import heapq
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):
+        #构建一个k个元素的heapq 
+        self.pool = nums
+        self.k = k
+        heapq.heapify(self.pool)
+        while len(self.pool)>k:
+            heapq.heappop(self.pool)
+
+    def add(self, val: int) -> int:
+        
+        if len(self.pool)<self.k:
+            heapq.heappush(self.pool, val)
+            
+        elif val>self.pool[0]:
+            heapq.heapreplace(self.pool,val)
+            
+        return self.pool[0]
+'''
