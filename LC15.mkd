@@ -1,0 +1,33 @@
+三数之和
+Given an array nums of n integers, 
+are there elements a, b, c in nums such that a + b + c = 0? 
+Find all unique triplets in the array which gives the sum of zero.
+
+题目： 求解一个序列中所有可能的三数之和为0的结果，即寻找不重复的 a+b+c =0
+
+思路1：两重循环，将第三个数 c = -a-b 存在字典里（相比暴力查询，节约了一重循环）
+时间复杂度 O(n^2)
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        #two loop find
+        #boundry
+        
+        if len(nums)<3: return []
+        
+        nums.sort()
+        res = set()
+        
+        for i, a in enumerate(nums[:-2]):
+            if a == nums[i-1] and i >= 1:  #与上一个重复，且不是首个，跳出此次循环
+                continue
+            
+            d = {}
+            for b in nums[i+1:]:
+                if b not in d:
+                    d[-a-b] = 1
+                else:
+                    res.add((a,-a-b,b))
+        return map(list,res)
+            
+```
