@@ -1,0 +1,31 @@
+## 98. Validate Binary Search Tree
+
+题目：判断一个二叉树是否为Valid二叉搜索树（Binary Search Tree，BST）
+
+思路1： 使用中序遍历二叉树，判断生成的序列是否为升序，若是，则为BST，返回True；否则，返回，False
+```python
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        inorder = self.inorder(root)
+        #print(inorder)
+        return inorder == list(sorted(set(inorder)))     
+    #中序遍历
+    def inorder(self, root):
+        if root is None:
+            return []
+        return self.inorder(root.left) + [root.val] + self.inorder(root.right)
+```
+
+
+思路2：floor = 左子树最大值， ceiling=右子树最小值。 对于一个root节点，如果它比floor小 or 比ceiling 大，返回 False；否则，返回True
+
+```python
+class Solution:
+    def isValidBST(self, root, floor=float('-inf'), ceiling=float('inf')):
+        if not root: 
+            return True
+        if root.val <= floor or root.val >= ceiling:
+            return False
+        # in the left branch, root is the new ceiling; contrarily root is the new floor in right branch
+        return self.isValidBST(root.left, floor, root.val) and self.isValidBST(root.right, root.val, ceiling)
+```
