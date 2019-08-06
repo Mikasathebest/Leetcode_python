@@ -1,0 +1,39 @@
+### 50. Pow(x, n)
+题目：计算x^n
+
+思路1.直接用库函数 pow(x,n)，一行代码没得说  O(n)
+
+思路2. 用递归计算； 将数字x一分为二，仅计算一半 x^(n/2)； 若n为奇数，n-1，返回x*x^(n-1)；
+注意n为负数的情况
+
+```python
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        
+        if not n: #terminate
+            return 1
+        
+        if n <0: #转化为(1/x)^n
+            return 1/self.myPow(x,-n)
+        
+        if n%2: #n is odd
+            return x * self.myPow(x, n-1)
+        return self.myPow(x*x,n/2)
+```
+
+另一种思路和上面相同，只是不递归，用位运算，解释见注释
+
+```python
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        if n <0:
+            x = 1/x
+            n = -n
+        pow = 1 #pow保存结果
+        while n:
+            if n&1:   #判断n二进制位是否为1，为1，pow需要乘x
+                pow *= x 
+            x *= x   #为0 则x*x，意味着进入下一位
+            n >>= 1  #n右移一位
+        return pow
+```
