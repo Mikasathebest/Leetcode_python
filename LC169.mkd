@@ -1,0 +1,50 @@
+### 169. Majority Element
+题目：找到一个序列nums中，重复次数最多的数（必定存在）
+e.g [1,2,2,3,2] 找到2
+
+思路1： 对序列nums中的每一个，用hashmap存储它，如果重复，则val + 1，最后返回val最大的对应的key
+```python
+#from collections import defaultdict
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        #hashmap = defaultdict() #刚开始以为要设定一个default值，后来发现不用
+        hashmap = {}
+        for x in nums:
+            if x not in hashmap:
+                hashmap[x] = 1
+            else:
+                hashmap[x] += 1
+        for k,v in hashmap.items():
+            if v > len(nums)/2:
+                return k
+```
+
+思路2：将nums排序，返回中位数（因为题目说必定存在重复次数> n/2的数）
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        #排序，找中位数
+        nums = sorted(nums)
+        return nums[len(nums)//2]
+      
+```
+思路3：分治，将nums分为左右两部分a b， 如果 a == b 随便返回其中之一;否则，如果a中元素'a'多，返回a，b中元素'b'多则返回b
+
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        
+        if not nums:
+            return None
+        if len(nums) == 1:
+            return nums[0]
+        
+        a = self.majorityElement(nums[:len(nums)//2])
+        b = self.majorityElement(nums[len(nums)//2:])
+        
+        if a == b:
+            return a
+        else:
+            if nums.count(a)>nums.count(b): return a
+            else: return b
+```
