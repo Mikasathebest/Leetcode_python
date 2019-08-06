@@ -1,0 +1,41 @@
+## 122. Best Time to Buy and Sell Stock II
+
+题目：买卖股票，问最大收益（手中只能保留一只股票，且买卖无限制，无费用）
+
+思路1：直接前后相减，累加
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+        for i in range(len(prices)-1):
+            if prices[i+1] > prices[i]:
+                profit += prices[i+1] - prices[i]
+        return profit
+```
+
+思路2：贪心法
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        buys = [-1,float('inf')]
+        buy = None
+        profit = 0
+        for price in prices:
+            if buy == None: #没买股票
+                if buys[1] < price:
+                    buys[1] = price  #不买，保存
+                else:
+                    buy = price  #买股票
+            else:  #手中有股票
+                if price < buy:  #手中股票比当前股票贵
+                    buy = price
+                else:           #当前股票比手中股票贵 要卖
+                    if buys[0] != -1:
+                        profit += buys[1] -buys[0]
+                    buys = [buy, price]  #记录 购买价格，当前价格
+                    buy = None  #卖出
+        if buys[0] != -1:
+            
+            profit += buys[1] -buys[0]
+        return profit
+```
