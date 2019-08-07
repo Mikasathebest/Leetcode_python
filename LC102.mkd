@@ -1,0 +1,50 @@
+## 102. Binary Tree Level Order Traversal
+
+题目： 给一个二叉树，按层输出
+
+思路1：BFS 按广度优先搜索遍历二叉树，按层存储其节点与值，然后返回即可
+
+```python
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root: return []
+        
+        result = []
+        queue = collections.deque()
+        queue.append(root)
+        
+        #visited.add(root)
+        
+        while queue:
+            level_size = len(queue)
+            current_level = []
+            
+            for _ in range(level_size):
+                node = queue.popleft()
+                current_level.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+        
+            result.append(current_level)
+        
+        return result
+```
+
+思路2 DFS 遍历到每一层第一个时，先创建一个空list[]，然后存进去val。对于每个节点，判断其level，保存至相应list中
+
+```python
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root: return []
+        self.result = []
+        self._dfs(root, 0)
+        return self.result
+        
+    def _dfs(self, node, level):
+        if not node: return
+        
+        if len(self.result) < level +1:
+            self.result.append([]) #创建[]，待存数据
+            
+        self.result[level].append(node.val)
+```
