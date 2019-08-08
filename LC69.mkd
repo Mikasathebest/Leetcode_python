@@ -1,0 +1,25 @@
+## 69. Sqrt(x)
+
+题目：给一个x，求它的平方根，整数 e.g input：x=8 Output： 2
+
+思路：二分法，一左一右指针l、r， mid 为l、r中间数。 mid^2 与 x 比较，误差足够小的时候，返回mid
+
+注意二分法应用条件： 1. 数组单调（增减均可） 2. 存在上下界 3. 能够通过索引访问（链表不符合）
+
+```python 
+import math
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        #x = t^2 单增, t = target
+        #二分法
+        l, r = 0, x
+        while l<= r:
+            mid = l + (r-l) //2
+            if mid * mid <= x < (mid+1)*(mid+1):
+                return mid
+            elif mid * mid > x:
+                r = mid
+            else:
+                l = mid + 1
+            
+```
