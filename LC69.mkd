@@ -23,3 +23,18 @@ class Solution:
                 l = mid + 1
             
 ```
+思路2 使用牛顿迭代法（此方法用于求解方程近似解，可以估计 a 的开n次方）  对于此题，需要迭代计算的是 $$ x_n+1 = \frac{x_n + n/xn}{2}$$ (其中n为题目所给整数，xn+1为待求的解)
+```python
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        
+        #牛顿迭代法
+        if x == 0 or x ==1: return x
+        a = 1.0
+        while True:
+            b = (a+(x/a))/2.0
+            if abs(a-b) < 1e-6:
+                break
+            a = b
+        return int(b)
+```
