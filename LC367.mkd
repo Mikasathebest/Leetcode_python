@@ -1,0 +1,31 @@
+## 367. Valid Perfect Square
+
+题目：判断一个数是否可以开平方  e.g 16 返回 True； 14 返回 False
+
+思路1：二分法  同sqrt一题，只是改变返回值为Boolean
+
+```python
+def isPerfectSquare(self, num: int) -> bool:
+  #二分法
+  left, right = 0,num
+  
+  while left <= right:
+      mid = left + (right -left) //2 
+      if mid * mid == num:
+          return True
+      elif mid* mid > num: #大了，往小分
+          right = mid - 1
+      else:
+          left = mid + 1
+  return False
+
+```
+思路2 牛顿迭代法 同sqrt一题
+
+```python
+def isPerfectSquare(self, num: int) -> bool:
+    r = num
+    while r*r>num:
+        r = (r + num /r) //2
+    return r*r == num
+```
