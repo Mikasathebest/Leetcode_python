@@ -1,0 +1,34 @@
+## 191. Number of 1 Bits
+
+题目：给一个32位无符号整数输入n,返回它1的个数。 e.g n=000000001011 返回 3
+
+思路1:初始化一个mask=1，mask与n按位比较，为1 则 count+1
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        count = 0
+        mask = 1
+        for i in range(32):
+            if mask & n:
+                count +=1
+            mask = mask << 1
+            
+        return count
+```
+
+思路2：用位运算，x & （x-1） ,可以去掉x的最后一位1，同时 count计数即可
+
+```python
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        res = 0
+        while n!=0:
+            n = n&(n-1)
+            res +=1
+        return res
+```
