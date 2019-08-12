@@ -1,0 +1,32 @@
+## 70. Climbing Stairs
+
+题目： 爬楼梯。给出一个楼梯n，每次可以爬 1 or 2 步，问到达n层所有可能走法的数目
+
+思路：动态规划（DP）。设f（n） = 第n层楼梯所有可能走法的数目，则状态方程为 f(n) = f(n-1)+f(n-2) 这里和fibonacci一样
+
+我的写法
+```python
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        #Dynamic Programming
+        if n <= 2:
+            return n
+        F = [0] *n
+        F[0],F[1] =1,2 
+        for i in range(2,n):
+            F[i] = F[i-1] + F[i-2]
+        return F[-1]
+```
+
+大佬写法
+```python
+def climbStaris(self, n):
+    x, y = 1, 1
+    for _ in range(1, n):
+        x, y = y, x+y       #注意这里x，y是同时赋值（其实存在中间变量）
+    return y
+```
