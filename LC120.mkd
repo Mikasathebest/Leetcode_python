@@ -1,0 +1,34 @@
+## 120. Triangle
+
+题目：给一个三角形，找出从上至下数值和最小的路径，每步只能走到下一行邻近的数。
+e.g 
+input：[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+output： 2+3+5 = 11
+
+思路：DP  状态转移方程： 自低向上走，第i行，第j列的路径和最小值设为 D（i,j）,则 D(i,j) = min(D(i+1,j), D(i+1),j+1) + Triangle(i,j)  
+解释： 第ij位置的最小路径 = 下面一层 邻近两点 的最小路径 + 到达此点的值
+
+终止条件： 找到D(0,0) 即顶点路径最小值
+
+```python
+class Solution(object):
+    def minimumTotal(self, triangle):
+        """
+        :type triangle: List[List[int]]
+        :rtype: int
+        """
+        #自下向上递推
+        if not triangle: 
+            return 0
+        res = triangle[-1]
+        
+        for i in range(len(triangle)-2,-1,-1):
+            for j in range(len(triangle[i])):
+                res[j] = triangle[i][j] + min(res[j], res[j+1])
+        return res[0]
+```
